@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jenesan 💖 Will You Be My Valentine?</title>
+<style>
+body {
+    margin:0; padding:0;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background: linear-gradient(to bottom right,#ff6ea1,#ffb3c6);
+    overflow:hidden;
+}
+h1 { margin-top:20px; font-size:28px; color:white; }
+#typing { color:white; font-size:16px; margin:8px; }
+button {
+    font-size:20px; padding:12px 24px; margin:12px; border:none; border-radius:15px;
+    cursor:pointer; position:relative; transition:0.3s;
+}
+.yes { background:red; color:white; }
+.no { background:white; position:absolute; }
+.noMessage {
+    position:absolute;
+    font-size:14px;
+    color:white;
+    font-weight:bold;
+    text-shadow: 1px 1px 2px black;
+}
+.heart {
+    position:absolute; font-size:20px; animation:float 5s linear infinite;
+}
+@keyframes float {
+    0% { transform:translateY(100vh); opacity:1; }
+    100% { transform:translateY(-10vh); opacity:0; }
+}
+.firework {
+    position:fixed; width:5px; height:5px; border-radius:50%; animation:explode 1s ease-out forwards;
+}
+@keyframes explode { to { transform:translate(var(--x),var(--y)); opacity:0; } }
+#secret { display:none; margin-top:40px; color:white; font-size:18px; padding:15px; }
+</style>
+</head>
+<body>
+
+<h1>Jenesan 💖 Will You Be My Valentine?</h1>
+<div id="typing"></div>
+
+<button class="yes" id="yesBtn">Yes 💕</button>
+<button class="no" id="noBtn">No 🙈</button>
+<div class="noMessage" id="noMsg">No is a little shy</div>
+
+<div id="secret">
+💌 Jenesan,  
+You make every day brighter. I choose you today and forever. 💖
+</div>
+
+<script>
+// Typing effect
+const message = "You are my favorite person in the whole universe 💕";
+let idx=0;
+function typeWriter(){
+  if(idx<message.length){
+    document.getElementById("typing").innerHTML+=message.charAt(idx);
+    idx++; setTimeout(typeWriter,50);
+  }
+}
+typeWriter();
+
+// Moving NO
+const noBtn=document.getElementById("noBtn");
+const noMsg=document.getElementById("noMsg");
+
+function moveNo(){
+    const x=Math.random()*(window.innerWidth-80);
+    const y=Math.random()*(window.innerHeight-80);
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+    noMsg.style.left=x+"px";
+    noMsg.style.top=(y+35)+"px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+// Floating hearts
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+},300);
+
+// Fireworks
+function fireworks(){
+  for(let i=0;i<50;i++){
+    const fw=document.createElement("div");
+    fw.className="firework";
+    fw.style.background="hsl("+Math.random()*360+",100%,50%)";
+    fw.style.left="50%"; fw.style.top="50%";
+    fw.style.setProperty('--x',(Math.random()*400-200)+"px");
+    fw.style.setProperty('--y',(Math.random()*400-200)+"px");
+    document.body.appendChild(fw);
+    setTimeout(()=>fw.remove(),1000);
+  }
+}
+
+// YES click
+const yesBtn=document.getElementById("yesBtn");
+yesBtn.addEventListener("click",()=>{
+  fireworks();
+  document.getElementById("secret").style.display="block";
+});
+</script>
+
+</body>
+</html>
